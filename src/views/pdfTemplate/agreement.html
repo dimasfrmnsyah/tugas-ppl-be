@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style type="text/css">
+     
+      body {
+        font-family: 'Roboto';
+        color: black;
+        text-align: center;
+        padding: 0;
+        margin: 0;
+        min-height: 21.5cm;
+        font-size: 10px;
+        background-image:url('{{_apiURL}}/assets/img/template_pdf_ag_fullA4-1cm.png');
+        background-repeat:repeat-y;
+        background-attachment:fixed;
+        background-size: 100.2%;
+      }
+      .box {
+        margin: auto;
+        max-width: 19cm;
+        padding-left: 1cm;
+        padding-right: 1cm;
+        /* padding-top: 0.5cm; */
+        /* padding-bottom: 0.5cm; */
+        overflow: hidden;
+        text-align: center;
+      }
+      table {
+        margin-bottom: 15px;
+        width: 100%;
+      }
+      th {
+        padding: 5px;
+      }
+      td {
+        vertical-align: top;
+        text-align: left;
+        padding: 5px;
+      }
+      .barcode {
+        width: 125px;
+        height: 125px;
+      }
+      .uppercase {
+        text-transform: uppercase;
+      }
+      .lowercase {
+        text-transform: lowercase;
+      }
+      .center {
+        text-align: center;
+        /* vertical-align: middle; */
+      }
+      .left {
+        text-align: left;
+        /* vertical-align: middle; */
+      }
+      .right {
+        text-align: right;
+        /* vertical-align: middle; */
+      }
+      b{ 
+        font-weight: bold; 
+      }
+      table {
+        border-collapse: collapse;
+      }
+      table, th, td{
+        border: 1px solid black;
+      }
+      .no-border table, 
+      .no-border th, 
+      .no-border td {
+        /* border: 1px solid black; */
+        border: none;
+      }
+      .border-top-bottom table, 
+      .border-top-bottom th, 
+      .border-top-bottom td {
+        border: none;
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
+      }
+      .no-padding table, 
+      .no-padding th, 
+      .no-padding td {
+        padding: 0;
+      }
+      .no-margin table, 
+      .no-margin th, 
+      .no-margin td {
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+  
+    <div class="box no-border">
+      <table style="width: 100%;" align="center">
+        <!-- HEADER -->
+        <tr>
+          <td>
+            <div class="no-border">
+              <table>
+                <!-- COMPANY IDENTITY -->
+                <tr>
+                  <td width="50%" class="left">
+                    <table>
+                      <tr>
+                        <td width="30%">
+                          <img
+                            src="{{_storageURL}}{{shipper.fotoProfile}}"
+                            alt="icon-karlo-white"
+                            style="height: 30px"
+                          />
+                        </td>
+                        <td width="70%">
+                          <b class="uppercase">{{shipper.fullName}}</b> <br />
+                          {{shipper.address}} <br />
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                  <td width="50%" class="right">
+                    <table>
+                      <tr>
+                        <td width="70%" class="right">
+                          <b class="uppercase">{{transporter.fullName}}</b> <br />
+                          {{transporter.address}} <br />
+                        </td>
+                        <td width="30%" class="right">
+                          <img
+                            src="{{_storageURL}}{{transporter.fotoProfile}}"
+                            alt="icon-karlo-white"
+                            style="height: 30px"
+                          />
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <!-- AGREEMENT NUMBER -->
+                <tr>
+                  <td class="" width="50%">
+                    <b>NO. AGREEMENT: {{agreementNumber}}</b>
+                  </td>
+                  <td class="right" width="50%">
+                    <b>Masa berlaku kontrak:</b><br />
+                    {{formatDate durationFrom 'DD MMM YYYY'}} - {{formatDate durationTo 'DD MMM YYYY'}}
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </td>
+        </tr>
+
+        <!-- DETAIL -->
+        <tr>
+          <td>
+            <div class="no-border">
+              <table>
+                <!-- RUTE & DETAIL ITEM TYPE TABLE-->
+                <tr class="border-top-bottom">
+                  <td width="30%">
+                    <b>Rute</b>
+                    <br />
+                  </td>
+                  <td width="70%">
+                    <b>Deskripsi</b>
+                  </td>
+                </tr>
+                <tr>
+                  <td width="30%">
+                    <b>{{capitalEachWord routeFrom.name}} - {{capitalEachWord routeTo.name}}</b>
+                    <br />
+                    <br />
+                    <br />
+                  </td>
+                  <td width="70%">
+                    {{description}}
+                  </td>
+                </tr>
+                <tr>
+                  <td width="30%">
+                    <b>Jenis Muatan</b>
+                  </td>
+                  <td width="70%">
+                    <b>{{capitalEachWord itemType.name}}</b>
+                  </td>
+                </tr>
+                <tr>
+                  <td width="30%">
+                    <b>Tipe Barang</b>
+                  </td>
+                  <td width="70%">
+                    {{cargoType.name}}
+                  </td>
+                </tr>
+                <tr>
+                  <td width="30%">
+                    <b>Sifat Barang</b>
+                    <br />
+                    <br />
+                    <br />
+                  </td>
+                  <td width="70%">
+                    {{itemCharacter.name}}
+                  </td>
+                </tr>
+
+                <!-- PRICE DETAIL TABLE -->
+                <tr class="border-top-bottom">
+                  <td width="30%">
+                    <b>Detail Harga</b>
+                    <br />
+                  </td>
+                  <td width="70%">
+                    <b></b>
+                  </td>
+                </tr>
+                <tr>
+                  <td width="30%">
+                    <b>Tipe Harga</b>
+                  </td>
+                  <td width="70%">
+                    {{pricingType.name}}
+                  </td>
+                </tr>
+                <tr>
+                  <td width="30%">
+                    <b>Harga {{pricingType.name}}</b>
+                  </td>
+                  <td width="70%" class="no-padding no-margin">
+                    <table>
+                      <tr>
+                        <td width="30%">
+                          Rp {{formatNumber price}}
+                        </td>
+                        <td width="30%">
+                          <b>Harga min / order</b>
+                        </td>
+                        <td width="30%">
+                          Rp {{formatNumber minPrice}}
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td width="30%">
+                    <b>Min Load</b>
+                  </td>
+                  <td width="70%" class="no-padding no-margin">
+                    <table>
+                      <tr>
+                        <td width="30%">
+                          {{formatNumber minLoad}} {{pricingType.unit}}
+                        </td>
+                        <td width="30%">
+                          <b>Max Load</b>
+                        </td>
+                        <td width="30%">
+                          {{formatNumber maxLoad}} {{pricingType.unit}}
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <!-- OTHER REQUIREMENT TABLE -->
+                <tr class="border-top-bottom">
+                  <td width="30%">
+                    <b>Kebutuhan Tambahan</b>
+                    <br />
+                  </td>
+                  <td width="70%">
+                    <b></b>
+                  </td>
+                </tr>
+                {{#each requirement}}
+                  <tr>
+                    <td width="30%">
+                      <b>{{requirement.name}}</b>
+                    </td>
+                    <td width="70%">
+                      Rp {{formatNumber price}}
+                    </td>
+                  </tr>
+                {{/each}}
+              </table>
+            </div>
+          </td>
+        </tr>
+
+        <!-- PAYMENT -->
+        <tr>
+          <td>
+            <div class="no-border">
+              <table>
+                <!-- PAYMENT -->
+                <tr>
+                  <td class="" width="50%">
+                  </td>
+                  <td class="right" width="50%">
+                    <u><b>Tipe pembayaran:</b> {{paymentType.name}}</u><br />
+                    {{transporter.bankAccount.name}} an. {{transporter.bankAccount.behalfOf}}<br/>
+                    {{transporter.bankAccount.number}}
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                  </td>
+                </tr>
+
+                <!-- COMPANY IDENTITY -->
+                <tr>
+                  <td width="50%" class="left">
+                    <b>Shipper</b> <br />
+                    <div  class="uppercase">{{shipper.fullName}}</div><br />
+                  </td>
+                  <td width="50%" class="right">
+                    <b>Transporter</b> <br />
+                    <div  class="uppercase">{{transporter.fullName}}</div><br />
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td>* Perjanjian ini dibuat secara elektronik di karlo.id sehingga tidak membutuhkan tanda tangan.</td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <body 
+    style="
+      font-family: 'Roboto';
+      color: #747273;
+        background-color: #f7f7f7;
+      /*background-color: #ffff;*/
+      font-size: 16px;
+      text-align: center;
+      padding-top: 50px;
+      padding-bottom: 50px;
+
+    ">
+    <div 
+      style="
+        margin: auto;
+        width: 70%;
+        border: 3px solid green;
+        background-color: #fff;
+        border: 1px solid #cfcfcf;
+        border-radius: 16px;
+        padding: 10px;
+      ">
+      <div style="width: 16px; height: 16px; background-color: #787878; border-radius: 16px"></div>
+
+      <div style="padding: 50px;">
+        <div style="width: 100%; vertical-align: middle">
+          <img
+            src="{{url}}/assets/img/image-verify-email.png"
+            alt="image-verify-email"
+            style="width: 50%; height: auto"
+          />
+        </div>          
+        Hallo {{fullName}}, terima kasih telah mendaftar di karlo.id, dengan senang hati kami akan melayani Anda.
+        <br />
+        Sebelum memulai, silakan klik tombol verifikasi di bawah ini untuk proses lebih lanjut.
+        <br />
+        <br />
+        <br />
+        <a
+          href="{{fe_url}}/verify?token={{token}}"
+          style="background-color: #7bc729;padding: 10px 20px 10px 20px;border-radius: 8px;font-size: 24px;text-decoration:none;background:#00C46E;color:#fff;font-weight:normal;text-transform:none;"
+          target="_blank"
+          >Verify me
+        </a>
+      </div>
+    </div>
+  </body>
+</html>

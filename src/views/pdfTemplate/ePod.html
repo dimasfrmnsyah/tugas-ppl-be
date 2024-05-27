@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style type="text/css">
+      body {
+        font-family: 'Roboto';
+        color: black;
+        text-align: center;
+        /* padding: 50px 0; */
+        padding: 0;
+        margin: 0;
+        font-size: 10px;
+      }
+      .title1 {
+        font-size: 14px;
+      }
+      .amount {
+        font-size: 18px;
+        color: #5C84B6;
+      }
+      .items {
+        font-size: 8px;
+      }
+      .box {
+        margin: auto;
+        max-width: 20cm;
+        padding-left: 0.5cm;
+        padding-right: 0.5cm;
+        /* padding-top: 0.5cm; */
+        /* padding-bottom: 0.5cm; */
+        overflow: hidden;
+        text-align: center;
+      }
+      .icon-header {
+        width: 100px;
+        height: 100px;
+      }
+      table {
+        margin-bottom: 15px;
+        width: 100%;
+      }
+      th {
+        padding: 5px;
+      }
+      td {
+        vertical-align: top;
+        text-align: left;
+        padding: 5px;
+      }
+      .barcode {
+        width: 125px;
+        height: 125px;
+      }
+      .uppercase {
+        text-transform: uppercase;
+      }
+      .lowercase {
+        text-transform: lowercase;
+      }
+      .center {
+        text-align: center;
+        /* vertical-align: middle; */
+      }
+      .left {
+        text-align: left;
+        /* vertical-align: middle; */
+      }
+      .right {
+        text-align: right;
+        /* vertical-align: middle; */
+      }
+      b{ 
+        font-weight: bold; 
+      }
+      table {
+        border-collapse: collapse;
+      }
+      table, th, td{
+        border: 1px solid black;
+      }
+      .no-border table, 
+      .no-border th, 
+      .no-border td {
+        border: 1px solid black;
+        border: none;
+        padding: 4;
+        margin: 0;
+      }
+      .border-top-bottom table, 
+      .border-top-bottom th, 
+      .border-top-bottom td {
+        border: none;
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <table style="width: 100%;" align="center">
+        <tr>
+          <td style="background-color: #3B3C3D; color: white;">
+            <div style="width: 100%; vertical-align: middle">
+              <img
+                src="{{url}}/assets/img/powered_by_karlo_white.png"
+                alt="icon-powered-by-karlo-white"
+                style="height: 30px"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="background-color: #3B3C3D; color: white;">
+            <center>
+              <h3 style="margin: 5px">SURAT JALAN ELEKTRONIK</h3>
+              <h5 style="margin: 5px">(E-POD)</h5>
+            </center>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="no-border">
+              <table>
+                <tr>
+                  <td class="" width="30%">
+                    {{invoice.invoiceNumber}} 
+                  </td>
+                  <td class="right" width="70%">
+                    <b>{{formatDate createdAt 'DD MMMM YYYY'}}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{capitalEachWord routeFrom.name}} - {{capitalEachWord routeTo.name}}
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <div class="no-border">
+              <table>
+                <tr>
+                  <td width="30%">
+                    <b>Shipper</b> <br />
+                    {{shipper.fullName}}
+                  </td>
+                  <td width="30%">
+                    <b>Transporter</b> <br />
+                    {{transporter.fullName}}
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <div class="no-border">
+              <table>
+                <tr>
+                  <td width="30%">
+                    <b>Muat</b>
+                    <br />
+                    {{shipment.warehouseFrom.name}}
+                    <br />
+                    <i>{{shipment.warehouseFrom.address}}</i>
+                  </td>
+                  <td width="30%">
+                    <b>Bongkar</b>
+                    <br />
+                    {{shipment.warehouseTo.name}}
+                    <br />
+                    <i>{{warehouseTo.address}}</i>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <center>
+              <h3 style="margin: 10px">Order Item Detail</h3>
+            </center>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <div class="no-border">
+              <table class="items" style="width: 100%; overflow: hidden;">
+                <tr>
+                  {{{getTitleArrayofObject shipment.itemForTemplate}}}
+                </tr>
+
+                {{#each shipment.itemForTemplate}}
+                  <tr>
+                      {{#each this}}
+                        <td>
+                          {{this}}
+                        </td>
+                      {{/each}}
+                  </tr>
+                {{/each}}
+              </table>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <div class="no-border">
+              <table>
+                <tr>
+                  <td class="left" width="25%">
+                    <b>Berat Awal (Kg)</b>
+                    <br />
+                    {{shipment.weightLoading}}
+                  </td>
+                  <td class="left" width="25%">
+                    <b>Berat Akhir (Kg)</b>
+                    <br />
+                    {{shipment.weightUnloading}}
+                  </td>
+                  <td class="left" width="25%">
+                    <b>Tanggal Muat</b>
+                    <br />
+                    {{formatDate shipment.dateLoading  'DD MMMM YYYY'}}
+                  </td>
+                  <td class="left" width="25%">
+                    <b>Tanggal Bongkar</b>
+                    <br />
+                    {{formatDate shipment.dateUnloading  'DD MMMM YYYY'}}
+                  </td>
+                </tr>
+              </table>
+            </div>
+            
+          </td>
+        </tr>
+
+        <tr>
+          <td class="no-border">
+            <b>Kebutuhan Tambahan</b> <br />
+            {{#each requirement}}
+              <table>
+                <tr>
+                  <td class="left" width="25%">
+                    {{requirement.name}}
+                  </td>
+                  <td class="left" width="35%">
+                    Rp {{formatNumber price}}
+                  </td>
+                  <td class="right" width="40%">
+                  </td>
+                </tr>
+              </table>
+            {{/each}}
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <div class="no-border">
+              <table>
+                <tr>
+                  <td class="center" width="30%">
+                    <b>Driver</b>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    {{driver.fullName}}
+                  </td>
+                  <td class="center" width="30%">
+                    <b>PIC Muat</b>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    {{shipment.warehousepicSender.fullName}}
+                  </td>
+                  <td class="center" width="30%">
+                    <b>PIC Bongkat</b>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    {{shipment.warehousepicReceiver.fullName}}
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </td>
+        </tr>
+
+      </table>
+    </div>
+  </body>
+</html>

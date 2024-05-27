@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style type="text/css">
+      body {
+        font-family: 'Roboto';
+        color: black;
+        text-align: center;
+        padding: 0;
+        margin: 0;
+        font-size: 10px;
+      }
+      .title1 {
+        font-size: 14px;
+      }
+      .amount {
+        font-size: 18px;
+        color: #5C84B6;
+      }
+      .items {
+        font-size: 8px;
+      }
+      .box {
+        margin: auto;
+        max-width: 20cm;
+        padding-left: 0.5cm;
+        padding-right: 0.5cm;
+        /* padding-top: 0.5cm; */
+        /* padding-bottom: 0.5cm; */
+        overflow: hidden;
+        text-align: center;
+      }
+      .icon-header {
+        width: 100px;
+        height: 100px;
+      }
+      table {
+        margin-bottom: 15px;
+        width: 100%;
+      }
+      th {
+        padding: 5px;
+      }
+      td {
+        vertical-align: top;
+        text-align: left;
+        padding: 5px;
+      }
+      .barcode {
+        width: 125px;
+        height: 125px;
+      }
+      .uppercase {
+        text-transform: uppercase;
+      }
+      .lowercase {
+        text-transform: lowercase;
+      }
+      .center {
+        text-align: center;
+        /* vertical-align: middle; */
+      }
+      .left {
+        text-align: left;
+        /* vertical-align: middle; */
+      }
+      .right {
+        text-align: right;
+        /* vertical-align: middle; */
+      }
+      b{ 
+        font-weight: bold; 
+      }
+      table {
+        border-collapse: collapse;
+      }
+      /* table, th, td{
+        border: 1px solid black;
+      } */
+
+      table {
+        border: 1px solid black;
+      }
+
+      /* th {
+        border: 1px solid black;
+      }
+      td {
+        border: 1px solid black;
+      } */
+
+      .no-border table, 
+      .no-border th, 
+      .no-border td {
+        border: 1px solid black;
+        border: none;
+        padding: 4;
+        margin: 0;
+      }
+      .border-top-bottom table, 
+      .border-top-bottom th, 
+      .border-top-bottom td {
+        border: none;
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
+      }
+
+      .top-border {
+        border-top: 1px solid black
+      }
+      .bottom-border {
+        border-bottom: 1px solid black
+      }
+
+      .pb {
+        page-break-before: always;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <table style="width: 100%;" align="center">
+        <tr>
+          <td style="background-color: #3B3C3D; color: white;">
+            <div style="width: 100%; vertical-align: middle">
+              <img
+                src="{{url}}/assets/img/powered_by_karlo_white.png"
+                alt="icon-powered-by-karlo-white"
+                style="height: 30px"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr class="top-border">
+          <td style="background-color: #3B3C3D; color: white;">
+            <center>
+              <h3 style="margin: 5px">INVOICE</h3>
+            </center>
+          </td>
+        </tr>
+        <tr class="top-border bottom-border">
+          <td>
+            <div class="no-border">
+              <table>
+                <tr>
+                  <td class="" width="30%">
+                    
+                    No. Invoice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{invoice.invoiceNumber}} <br /><br />
+                    <small>
+                      No. Order&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{orderNumber}} <br />
+                      No. Referensi&nbsp;: {{refNumber}} <br />
+                    </small>
+                  </td>
+                  <td class="right" width="70%">
+                    <b>{{formatDate createdAt 'DD MMMM YYYY'}}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{capitalEachWord routeFrom.name}} - {{capitalEachWord routeTo.name}}
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <div class="no-border">
+              <table>
+                <tr>
+                  <td width="30%">
+                    <b>Shipper</b> <br />
+                    {{shipper.fullName}}
+                  </td>
+                  <td width="30%">
+                    <b>Transporter</b> <br />
+                    {{transporter.fullName}}
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </td>
+        </tr>
+
+
+        {{#each shipment}}
+
+        <tr class="top-border bottom-border">
+          <td>
+            <center>
+              <h3 style="margin: 10px">Order Item Detail {{math @index '+' 1}}</h3>
+            </center>
+          </td>
+        </tr>
+
+          <tr>
+            <td>
+              <div class="no-border">
+                <table>
+                  <tr>
+                    <td width="30%">
+                      <b>Muat {{math @index '+' 1}}</b>
+                      <br />
+                      {{warehouseFrom.name}}
+                      <br />
+                      <i>{{warehouseFrom.address}}</i>
+                      <br />
+                      {{{warehousepicSender.fullName}}}
+                      <br />
+                      <br />
+                    </td>
+                    <td width="30%">
+                      <b>Bongkar {{math @index '+' 1}}</b>
+                      <br />
+                      {{warehouseTo.name}}
+                      <br />
+                      <i>{{warehouseTo.address}}</i>
+                      <br />
+                      {{{warehousepicReceiver.fullName}}}
+                      <br />
+                      <br />
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </td>
+          </tr>
+
+
+
+          <!-- <tr>
+            <td>
+              <div class="no-border">
+                <table class="items" style="width: 100%; overflow: hidden;">
+                  <tr>
+                    {{{getTitleArrayofObject itemForTemplate}}}
+                  </tr>
+
+                  {{#each itemForTemplate}}
+                    <tr>
+                        {{#each this}}
+                          <td>
+                            {{this}}
+                          </td>
+                        {{/each}}
+                    </tr>
+                  {{/each}}
+                </table>
+              </div>
+            </td>
+          </tr> -->
+
+          <tr>
+            <td>
+              <div class="no-border">
+                <table>
+                  <tr>
+                    <td class="left" width="25%">
+                      <b>Berat Awal (Kg)</b>
+                      <br />
+                      {{formatNumber weightInitial}}
+                    </td>
+                    <td class="left" width="35%">
+                      <b>Berat Akhir (Kg)</b>
+                      <br />
+                      {{formatNumber weightUnloading}}
+                    </td>
+                    <td class="right" width="40%">
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              
+            </td>
+          </tr>
+        {{/each}}
+
+        <tr>
+          <td class="no-border">
+            <b>Kebutuhan Tambahan</b> <br />
+            {{#each requirement}}
+              <table>
+                <tr>
+                  <td class="left" width="25%">
+                    {{requirement.name}}
+                  </td>
+                  <td class="left" width="35%">
+                    Rp {{formatNumber price}}
+                  </td>
+                  <td class="right" width="40%">
+                  </td>
+                </tr>
+              </table>
+            {{/each}}
+          </td>
+        </tr>
+
+        <tr class="top-border">
+          <td>
+            <div class="no-border">
+              <table>
+                <tr>
+                  <td class="left" width="60%">
+                    <!-- <b>Tanggal Koreksi</b> {{formatDate '12/04/2019' 'DD/MM/YYYY'}} <br/> -->
+                    <!-- <b>Tanggal Final</b> {{ formatDate '12/04/2019' 'DD/MM/YYYY'}} <br/> -->
+                    <br /><br />
+                    <br /><br /><br />
+                    <table>
+                      <tr>
+                        <td class="left" width="25%">
+                          <b>Total Berat Awal (Kg)</b>
+                          <br />
+                          {{formatNumber totalWeightInitial}}
+                          <br />
+                          <br />
+                          {{#if isCustomPriceType}}
+                          <b>Total Awal ({{pricingType.name}})</b>
+                          <br />
+                          {{formatNumber totalAmountInitial}}
+                          <br />
+                          <br />
+                          {{/if}}
+                          <b>Harga</b>
+                          <br />
+                          Rp {{formatNumber price}} {{pricingType.name}}
+                          <br />
+                        </td>
+                        <td class="left" width="35%">
+                          <b>Total Berat Akhir (Kg)</b>
+                          <br />
+                          {{formatNumber totalWeightUnloading}}
+                          <br />
+                          <br />
+                          {{#if isCustomPriceType}}
+                          <b>Total Akhir ({{pricingType.name}})</b>
+                          <br />
+                          {{formatNumber totalAmountUnloading}}
+                          <br />
+                          <br />
+                          {{/if}}
+                        </td>
+                      </tr>
+                    </table>
+                    <br /><br /><br /><br />
+                    Tipe pembayaran: {{paymentType.name}} <br/>
+                    Transfer ke no {{transporter.bankAccount.name}} {{transporter.bankAccount.number}} <br/>
+                  </td>
+                  <div class="no-border">
+                    <table> 
+                      <!-- PUT INVOICE DESCRIPTION HERE -->
+                      <tr>
+                        <td width="30%">
+                          <b>Deskripsi</b>
+                          <br />
+                          {{description}}
+                        </td>
+                      <!-- END INVOICE DESCRIPTION HERE -->
+                        <td class="right" width="40%">
+                          <b class="title2">Trip Summary</b> <br />
+                          {{#each tripSummary}}
+                            {{status}} {{formatDate createdAt 'DD MMM YYYY, HH:mm'}} <br />
+                          {{/each}}
+                          <br />
+      
+                          <b class="title2">Calculation</b> <br />
+                          <table>
+                            <tr>
+                              <td class="left" width="40%">
+                                Transportation
+                              </td>
+                              <td class="right" width="60%">
+                                Rp. {{{formatNumber invoice.transportPrice}}}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td class="left" width="40%">
+                                Handling Fee
+                              </td>
+                              <td class="right" width="60%">
+                                Rp. {{{formatNumber invoice.handlingFee}}}
+                              </td>
+                            </tr>
+                            {{#each invoice.additionalPrice}}
+                              <tr>
+                                <td class="left" width="40%">
+                                  {{name}}
+                                </td>
+                                <td class="right" width="60%">
+                                  Rp {{formatNumber price}}
+                                </td>
+                              </tr>
+                            {{/each}}
+                          </table>         
+                          
+                          <br />
+      
+                          <b class="title2">Amount</b> <br />
+                          <b class="amount">Rp {{formatNumber invoice.totalPrice}}</b> <br />
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </tr>
+              </table>
+            </div>
+          </td>
+        </tr>
+
+      </table>
+      <div class="pb">
+        <table>
+          <tr>
+            <td>
+              <center>
+                <h3>LAMPIRAN</h3>
+              </center>
+            </td>
+          </tr>
+          {{#each shipment}}
+          <tr class="border-none">
+            <td class="border-none">
+              <div class="no-border">
+                <center>
+                  <p><b>Detail Barang {{math @index '+' 1}}</b></p>
+                </center>
+                <table class="items" style="width: 100%; overflow: hidden;">
+                  <tr>
+                    {{{getTitleArrayofObject itemForTemplate}}}
+                  </tr>
+
+                  {{#each itemForTemplate}}
+                    <tr>
+                        {{#each this}}
+                          <td>
+                            {{this}}
+                          </td>
+                        {{/each}}
+                    </tr>
+                  {{/each}}
+                </table>
+              </div>
+            </td>
+          </tr>
+          {{/each}}
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
