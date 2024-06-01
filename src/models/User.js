@@ -23,7 +23,6 @@ ModelSchema.pre(['find', 'findOne', 'countDocuments'], function () {
 })
 ModelSchema.pre('save', function (next) {
 	const user = this
-console.log(user.password)
 	// only hash the password if it has been modified (or is new)
 	if (!user.isModified('password')) return next()
 

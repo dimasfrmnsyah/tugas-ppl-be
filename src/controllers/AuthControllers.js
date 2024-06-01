@@ -1,9 +1,7 @@
-const mongoose = require('mongoose')
+const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const {
 	User,
-	Truck,
-	Warehouse,
 } = require('../models')
 
 exports.login = async (req, res) => {

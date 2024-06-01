@@ -1,11 +1,5 @@
-const ensureToken = require('./ensureToken')
-const ensureRole = require('./ensureRole')
-const ensureModule = require('./ensureModule')
-const ensureParentOnly = require('./ensureParentOnly')
+const authenticateJWT = require('./jwt')
 
 module.exports = {
-	ensureToken,
-	ensureRole,
-	ensureModule,
-	ensureParentOnly,
+	authenticateJWT,
 }
