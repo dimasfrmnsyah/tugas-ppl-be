@@ -15,6 +15,7 @@ module.exports = function routes(app) {
 	router.post('/login', AuthController.login)
 	router.post('/prediction',authenticateJWT,PredictionControllers.prediction)
 	router.get('/history',authenticateJWT, HistoryControllers.history)
+	router.get('/history-test',authenticateJWT, HistoryControllers.historyTesting)
 	router.get('/history/:id',authenticateJWT, HistoryControllers.getOne)
 	router.get('/user/me',authenticateJWT, UserController.me)
 	router.put('/user/:id',authenticateJWT, UserController.updateUser)
